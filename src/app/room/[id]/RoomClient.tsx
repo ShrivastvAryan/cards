@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { BuyMeCoffee } from "@/components/BuyMeCoffee";
 import { Logo, LogoMark } from "@/components/Logo";
 import { PlayingCard } from "@/components/PlayingCard";
 import type { Action } from "@/lib/game";
@@ -241,6 +242,7 @@ function JoinForm({ roomId, view, onJoined }: { roomId: string; view: RoomView; 
           Back home
         </Link>
       </div>
+      <BuyMeCoffee compact />
     </Centered>
   );
 }
@@ -552,6 +554,7 @@ function Table({
                 <li key={l.id}>{l.text}</li>
               ))}
             </ul>
+            <BuyMeCoffee compact className="mt-6 w-full" />
           </div>
         </div>
       )}

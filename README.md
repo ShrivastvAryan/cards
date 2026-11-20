@@ -18,6 +18,19 @@ For friends on the same Wi-Fi, share the `Network:` URL that `next dev` prints (
 - `src/app/api/rooms/**` — Route Handlers (create, join, poll state, act). Each guest gets a secret token kept in `localStorage`; other players' cards are never sent to the browser until showdown.
 - `src/app/room/[id]` — the table UI. It polls the server every second.
 
+## Settings (environment variables)
+
+| Variable | What it does |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | Your public address, e.g. `https://teenpatti.yourdomain.com`. Used for link previews on WhatsApp etc. |
+| `NEXT_PUBLIC_BMC_USERNAME` | Your buymeacoffee.com username. Shows the "☕ Buy me a coffee" button; hidden when unset. |
+
+Locally, put them in `.env.local`. On Railway, add them under **Variables** and redeploy. Both are baked in at build time, so a change needs a new build.
+
+## Logo
+
+All icons (favicon, Apple touch icon, PWA icons, share preview) are generated from one SVG: `node scripts/logo.mjs`.
+
 ## Deploying
 
 Game state lives in the server's memory, so run it as a single long-lived Node process (`bun run build && bun run start`, a VPS, Railway, Render, Fly…). Serverless hosts like Vercel run many short-lived instances, so tables won't be shared reliably there; you'd need Redis or similar for that.

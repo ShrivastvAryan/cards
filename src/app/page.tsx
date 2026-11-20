@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BuyMeCoffee } from "@/components/BuyMeCoffee";
 import { Logo } from "@/components/Logo";
 import { api, loadName, saveCreds, saveName } from "@/lib/client";
 
@@ -140,6 +141,11 @@ export default function Home() {
             <li>Pot limit is ₹2000: once the pot reaches it, everyone still in shows their cards.</li>
           </ul>
         </details>
+
+        <div className="mt-6 flex flex-col items-center gap-2 text-center">
+          <BuyMeCoffee />
+          <p className="text-xs text-white/40">Enjoying the game? Support its development.</p>
+        </div>
       </div>
     </main>
   );
