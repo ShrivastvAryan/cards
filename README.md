@@ -1,6 +1,11 @@
-# Teen Patti — multiplayer with friends
+# Taash — card games with friends
 
-Next.js (App Router) + Tailwind. No sign-up: players pick a guest name, the host shares the table link, everyone plays in real time.
+Next.js (App Router) + Tailwind, mobile-first. No sign-up: pick a guest name, share the table link, play in real time with friends or computer players (F1, F2…).
+
+**Games**
+- **Teen Patti**: Classic or **Joker** mode (a turned-up card's rank is wild).
+- **Bluff**: claim cards face down, call out the liars.
+- **Color Rush**: an original color-matching shedding game (skip, reverse, +2, wilds, "Last card!").
 
 ## Run
 
@@ -13,10 +18,14 @@ For friends on the same Wi-Fi, share the `Network:` URL that `next dev` prints (
 
 ## How it works
 
-- `src/lib/cards.ts` — deck, shuffling, hand ranking (Trail › Pure sequence › Sequence › Color › Pair › High card; A-K-Q top, A-2-3 second).
-- `src/lib/game.ts` — in-memory room/game engine: boot, blind/seen chaal, raise, pack, show, side show, 30s turn timer, auto next hand, rebuy.
-- `src/app/api/rooms/**` — Route Handlers (create, join, poll state, act). Each guest gets a secret token kept in `localStorage`; other players' cards are never sent to the browser until showdown.
-- `src/app/room/[id]` — the table UI. It polls the server every second.
+- `src/lib/core.ts`: shared types (players, rooms, the `Engine` interface every game implements).
+- `src/lib/rooms.ts`: in-memory room store, join/leave, host actions, computer players, timers.
+- `src/lib/games/teenpatti.ts`, `bluff.ts`, `colorrush.ts`: one module per game (rules, bots, per-player views).
+- `src/lib/cards.ts`: standard deck + Teen Patti hand ranking (with joker/wild scoring).
+- `src/app/api/rooms/**`: route handlers (create, join, poll state, act). Each guest has a secret token in `localStorage`; hidden cards never reach other browsers.
+- `src/components/game/*Table.tsx`: one table UI per game; `src/app/room/[id]/RoomClient.tsx` is the shared room shell. Clients poll every second.
+
+**Adding a game**: write an `Engine` in `src/lib/games/`, register it in `ENGINES` (`rooms.ts`), add it to `src/lib/catalog.ts`, and render its table in `RoomClient.tsx`.
 
 ## Settings (environment variables)
 

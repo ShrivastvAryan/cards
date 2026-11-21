@@ -1,4 +1,4 @@
-/** Teen Patti mark: renders the same badge as /logo.svg. */
+/** Taash mark: renders the same badge as /logo.svg. */
 export function LogoMark({ className = "w-10 h-10" }: { className?: string }) {
   // eslint-disable-next-line @next/next/no-img-element -- tiny static SVG, no optimization needed
   return <img src="/logo.svg" alt="" aria-hidden className={`${className} drop-shadow-lg select-none`} draggable={false} />;
@@ -14,7 +14,7 @@ export function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
       <span
         className={`${text} font-black tracking-tight bg-gradient-to-b from-amber-200 to-amber-500 bg-clip-text text-transparent`}
       >
-        Teen Patti
+        Taash
       </span>
     </span>
   );

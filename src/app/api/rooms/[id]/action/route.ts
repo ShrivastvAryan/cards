@@ -1,5 +1,6 @@
 import { body, handle } from "@/lib/api";
-import { act, auth, getRoom, viewFor, type Action } from "@/lib/game";
+import type { Action } from "@/lib/core";
+import { act, auth, getRoom, viewFor } from "@/lib/rooms";
 
 export async function POST(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;

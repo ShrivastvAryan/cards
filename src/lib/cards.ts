@@ -1,18 +1,21 @@
 // Card + hand evaluation for Teen Patti (shared by server and client).
 
-export type Suit = "S" | "H" | "D" | "C";
+export type Suit = "S" | "H" | "D" | "C" | "X"; // X = Joker (Old Maid only)
 export interface Card {
-  r: number; // 2..14 (11=J, 12=Q, 13=K, 14=A)
+  r: number; // 2..14 (11=J, 12=Q, 13=K, 14=A); 0 = Joker
   s: Suit;
 }
 
 export const SUITS: Suit[] = ["S", "H", "D", "C"];
-export const SUIT_SYMBOL: Record<Suit, string> = { S: "♠", H: "♥", D: "♦", C: "♣" };
+export const SUIT_SYMBOL: Record<Suit, string> = { S: "♠", H: "♥", D: "♦", C: "♣", X: "🃏" };
+export const JOKER: Card = { r: 0, s: "X" };
+export const isJokerCard = (c: Card) => c.r === 0;
 export const RANK_LABEL: Record<number, string> = {
   11: "J",
   12: "Q",
   13: "K",
   14: "A",
+  0: "JOKER",
 };
 export const rankLabel = (r: number) => RANK_LABEL[r] ?? String(r);
 
@@ -91,3 +94,40 @@ export function compareHands(a: Card[], b: Card[]): number {
   }
   return 0;
 }
+
+export function compareScores(a: HandScore, b: HandScore): number {
+  if (a.category !== b.category) return a.category - b.category;
+  for (let i = 0; i < Math.max(a.tiebreak.length, b.tiebreak.length); i++) {
+    const d = (a.tiebreak[i] ?? 0) - (b.tiebreak[i] ?? 0);
+    if (d !== 0) return d;
+  }
+  return 0;
+}
+
+const ALL_CARDS: Card[] = SUITS.flatMap((s) => Array.from({ length: 13 }, (_, i) => ({ r: i + 2, s })));
+
+/**
+ * Best possible score when every card of `jokerRank` is wild (Joker mode).
+ * Without a joker rank this is the normal evaluation.
+ */
+export function scoreHand(cards: Card[], jokerRank?: number | null): HandScore & { usedJoker: boolean } {
+  const wilds = jokerRank ? cards.filter((c) => c.r === jokerRank) : [];
+  if (!wilds.length) return { ...evaluateHand(cards), usedJoker: false };
+  if (wilds.length === 3) return { category: 5, tiebreak: [14], name: HAND_NAMES[5], usedJoker: true };
+  const fixed = cards.filter((c) => c.r !== jokerRank);
+  let best: HandScore | null = null;
+  const tryHand = (h: Card[]) => {
+    const e = evaluateHand(h);
+    if (!best || compareScores(e, best) > 0) best = e;
+  };
+  if (wilds.length === 1) {
+    for (const a of ALL_CARDS) tryHand([...fixed, a]);
+  } else {
+    for (const a of ALL_CARDS) for (const b of ALL_CARDS) tryHand([...fixed, a, b]);
+  }
+  return { ...(best as unknown as HandScore), usedJoker: true };
+}
+
+export const sameCard = (a: Card, b: Card) => !!a && !!b && a.r === b.r && a.s === b.s;
+/** Stable text key for a card, e.g. "7H" (safe to keep in React state). */
+export const cardKey = (c: Card) => `${c.r}${c.s}`;

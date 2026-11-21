@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Teen Patti — Play with friends",
-    short_name: "Teen Patti",
-    description: "Create a table as a guest, share the link, and play Teen Patti with friends or the computer.",
+    name: "Taash — Card games with friends",
+    short_name: "Taash",
+    description: "Teen Patti, Bluff and Color Rush with friends or the computer. No sign-up.",
     start_url: "/",
     display: "standalone",
     orientation: "portrait",

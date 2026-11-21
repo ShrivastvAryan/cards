@@ -1,5 +1,5 @@
 import { handle } from "@/lib/api";
-import { getRoom, viewFor } from "@/lib/game";
+import { getRoom, viewFor } from "@/lib/rooms";
 
 export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;

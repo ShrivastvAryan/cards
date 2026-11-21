@@ -62,9 +62,9 @@ const og = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" vi
   <rect width="1200" height="630" fill="#0b1210"/>
   <ellipse cx="600" cy="315" rx="640" ry="380" fill="url(#ogfelt)" opacity=".55"/>
   <g transform="translate(90 125) scale(0.74)">${badge.replace(/<\/?svg[^>]*>/g, "")}</g>
-  <text x="530" y="295" font-family="DejaVu Sans, Arial, sans-serif" font-weight="900" font-size="98" fill="url(#t)">Teen Patti</text>
-  <text x="535" y="375" font-family="DejaVu Sans, Arial, sans-serif" font-size="38" fill="#d1fae5" opacity=".85">Join my table — play with friends</text>
-  <text x="535" y="430" font-family="DejaVu Sans, Arial, sans-serif" font-size="30" fill="#a7f3d0" opacity=".6">No sign-up · just open the link</text>
+  <text x="530" y="295" font-family="DejaVu Sans, Arial, sans-serif" font-weight="900" font-size="128" fill="url(#t)">Taash</text>
+  <text x="535" y="375" font-family="DejaVu Sans, Arial, sans-serif" font-size="38" fill="#d1fae5" opacity=".85">Card games with friends</text>
+  <text x="535" y="430" font-family="DejaVu Sans, Arial, sans-serif" font-size="30" fill="#a7f3d0" opacity=".6">Teen Patti · Bluff · Color Rush</text>
 </svg>`;
 
 mkdirSync("public/icons", { recursive: true });

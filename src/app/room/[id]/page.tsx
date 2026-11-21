@@ -5,7 +5,7 @@ import RoomClient from "./RoomClient";
 
 export const metadata: Metadata = {
   title: "Join the table",
-  description: "You're invited to a Teen Patti table. Pick a guest name and take a seat.",
+  description: "You're invited to a card table on Taash. Pick a guest name and take a seat.",
 };
 
 export default function RoomPage() {

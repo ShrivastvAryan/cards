@@ -1,5 +1,5 @@
 "use client";
-import type { RoomView } from "./game";
+import type { RoomView } from "./rooms";
 
 export type { RoomView };
 export interface Creds {

@@ -1,4 +1,4 @@
-import { GameError } from "./game";
+import { GameError } from "./core";
 
 export async function handle(fn: () => unknown | Promise<unknown>) {
   try {
